@@ -1,8 +1,15 @@
+mp
 mp.o
 test/config.ini
 test/tmp*
 test/.pytest_cache
 __pycache__
 *.bat
+*.sh
 .*
-
+*.o
+*.ppu
+*.a65
+*.lst
+*.obx
+*.pgx
