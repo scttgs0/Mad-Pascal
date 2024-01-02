@@ -1,7 +1,7 @@
   opt l-
 
 /* -----------------------------------------------------------------------
-/*                        CPU 6502 Run Time Library - RAW
+/*                        CPU 6502 Run Time Library - Foenix F256
 /*              19.04.2018 ; 04.12.2021
 /* -----------------------------------------------------------------------
 /* 16.03.2019 poprawka dla @printPCHAR, @printSTRING gdy [YA] = 0
@@ -49,9 +49,11 @@ numread .word               ; pointer to variable, length of loaded data
   
 ; -----------------------------------------------------------------------
 
-  icl 'raw\raw.hea'
-  icl 'raw\putchar.asm'	    ; @putchar
-	
+  icl 'f256\f256.hea'
+	icl 'f256\clrscr.asm'     ; @clrscr
+  icl 'f256\putchar.asm'	  ; @putchar
+	icl 'f256\putpixel.asm'		; @putpixel
+
 ; -----------------------------------------------------------------------
 
   opt l+
