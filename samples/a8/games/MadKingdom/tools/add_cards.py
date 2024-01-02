@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # tool for adding cards to database
-# probably not very useful for anyone else on the enitre world
+# probably not very useful for anyone else on the entire world
 
 # author: bocianu@gmail.com <Wojciech Bociański>
 
