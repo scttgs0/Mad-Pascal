@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 # tool for extracting/converting sqllite card database into asm data file
-# probably not very useful for anyone else on the enitre world
-# usage python extract_cards.py otputFile.asm
+# probably not very useful for anyone else on the entire world
+# usage python extract_cards.py outputFile.asm
 
 # author: bocianu@gmail.com <Wojciech Bociański>
 
