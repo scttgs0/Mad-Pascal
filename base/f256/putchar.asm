@@ -5,8 +5,6 @@
 
 */
 
-.proc	@putchar (.byte a) .reg
-
-;	jmp xxxx
+.proc @putchar (.byte a) .reg
 
 .endp

@@ -1,0 +1,4 @@
+
+.proc	@putpixel
+
+.endp
