@@ -1,8 +1,9 @@
-mp.o
+.*
+*.o
+*.ppu
 test/config.ini
 test/tmp*
 test/.pytest_cache
 __pycache__
 *.bat
-.*
-
+*.sh

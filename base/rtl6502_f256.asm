@@ -1,15 +1,8 @@
+
   opt l-
 
 /* -----------------------------------------------------------------------
 /*                        CPU 6502 Run Time Library - Foenix F256
-/*              19.04.2018 ; 04.12.2021
-/* -----------------------------------------------------------------------
-/* 16.03.2019 poprawka dla @printPCHAR, @printSTRING gdy [YA] = 0
-/* 29.02.2020 optymalizacja @printREAL, pozbycie sie
-/*    'jsr mov_BYTE_DX', 'jsr mov_WORD_DX', 'jsr mov_CARD_DX'
-/* 07.04.2020 negSHORT, @TRUNC_SHORT, @ROUND_SHORT, @FRAC_SHORT, @INT_SHORT
-/* 19.04.2020 nowe podkatalogi base\atari, base\common, base\runtime
-/* 10.01.2021 c4plus
 /* -----------------------------------------------------------------------
 
 @AllocMem

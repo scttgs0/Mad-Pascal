@@ -3,6 +3,4 @@
 
 .proc	@ClrScr
 
-;	jmp xxxx
-
 .endp
