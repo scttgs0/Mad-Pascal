@@ -1,6 +1,7 @@
 .*
 *.o
 *.ppu
+mp
 test/config.ini
 test/tmp*
 test/.pytest_cache
