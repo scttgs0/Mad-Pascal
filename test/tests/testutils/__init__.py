@@ -69,9 +69,9 @@ class testUtils:
         # compile and validate
         rc = run("{} {} -t raw".format(self.config.get('paths','mp'), pasfile), shell = True)
         if rc.returncode != 0 :
-            raise NotImplementedError("Mad-Pascal exit code = {}. Probably compilation error occured".format(rc.returncode))
+            raise NotImplementedError("Mad-Pascal exit code = {}. Probably compilation error occurred".format(rc.returncode))
         if not os.path.exists(srcasmfile):
-            raise NotImplementedError("File {} not found! Probably compilation error occured".format(srcasmfile))
+            raise NotImplementedError("File {} not found! Probably compilation error occurred".format(srcasmfile))
                         
         # copy assembly file to tempdir if needed
         if srcasmfile != asmfile: 
@@ -79,10 +79,10 @@ class testUtils:
             while not os.path.exists(asmfile):
                 sleep(0.1)
         
-        # assemby file and validate
+        # assemble file and validate
         rc = run("{} {} -x -i:{} -t:{} -o:{}".format(self.config.get('paths','mads'), asmfile, self.config.get('paths','base'), tabfile, binfile), shell = True)
         if rc.returncode != 0:
-            raise NotImplementedError("Mad-Assembler exit code = {}. Probably nasty assemblation error occured".format(rc.returncode))
+            raise NotImplementedError("Mad-Assembler exit code = {}. Probably nasty assemblation error occurred".format(rc.returncode))
 
         # parse all labels
         self.labels = self.getLabels(tabfile)
