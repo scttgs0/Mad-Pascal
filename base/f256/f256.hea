@@ -1,4 +1,11 @@
 
+tempzp                  = $A0           ; 16 bytes
+
+ScreenPointer           = $B0           ; [word]
+CursorColumn            = $B2           ; [byte]
+CursorRow               = $B3           ; [byte]
+CursorColor             = $B4           ; [byte]
+
 ;--------------------------------------
 ; System Equates for Foenix F256 JR/K
 ;--------------------------------------
