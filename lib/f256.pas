@@ -7,6 +7,23 @@ unit f256;
 
 interface
 
+const
+    mmuPage0            = $00;
+    mmuPage1            = $01;
+    mmuPage2            = $02;
+    mmuPage3            = $03;
+    mmuEditPage0        = $00;
+    mmuEditPage1        = $10;
+    mmuEditPage2        = $20;
+    mmuEditPage3        = $30;
+    mmuEditMode         = $80;
+
+    iopPage0            = $00           // system
+    iopPage1            = $01           // charset, gfx LUT
+    iopPage2            = $02           // text map
+    iopPage3            = $03           // text color map
+    iopDisable          = $04
+
 var
 
 //  Foenix F256 Registers
