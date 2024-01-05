@@ -1,6 +1,9 @@
 .*
 *.o
 *.ppu
+*.lst
+*.obx
+*.a65
 mp
 test/config.ini
 test/tmp*
