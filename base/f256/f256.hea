@@ -2,9 +2,18 @@
 tempzp                  = $A0           ; 16 bytes
 
 ScreenPointer           = $B0           ; [word]
-CursorColumn            = $B2           ; [byte]
-CursorRow               = $B3           ; [byte]
-CursorColor             = $B4           ; [byte]
+CursorColumn            = $B2
+CursorRow               = $B3
+CursorColor             = $B4
+
+MAIN.GRAPH.WIN_TOP      = $C0           ; [word]
+MAIN.GRAPH.WIN_BOTTOM   = $C2           ; [word]
+MAIN.GRAPH.WIN_LEFT     = $C4           ; [word]
+MAIN.GRAPH.WIN_RIGHT    = $C6           ; [word]
+
+kernel_args_ext         = $F8
+kernel_args_extlen      = $FA
+
 
 ;--------------------------------------
 ; System Equates for Foenix F256 JR/K
