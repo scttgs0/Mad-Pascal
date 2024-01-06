@@ -46,7 +46,7 @@ asm {
 };
 end;
 
-procedure vbli:interrupt;
+procedure vbli;interrupt;
 var dx,dy:shortInt;
 begin
     asm {

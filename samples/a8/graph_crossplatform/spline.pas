@@ -31,6 +31,7 @@ var
   Px, Py : Array [0..NumPts + 1] of single;
 
   GraphDriver,GraphMode : smallint;
+  x_,y_,nx_,ny_ : smallint;
 
 
 procedure SplinePoint (t : single; var Point : PointType);
@@ -95,7 +96,11 @@ begin
       {Calculate end point}
       SplinePoint (Segment / Resolution, Next);
       {Draw segment}
-      Line (round (Current.x), Round (Current.y), Round (Next.x), Round (Next.y) );
+      x_ := Round (Current.x);
+      y_ := Round (Current.y);
+      nx_ := Round (Next.x);
+      ny_ := Round (Next.y);
+      Line (x_, y_, nx_, ny_);
       {Next part}
       Current := Next;
     end;
