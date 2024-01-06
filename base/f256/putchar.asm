@@ -1,5 +1,7 @@
 
 .proc   @putchar (.byte a) .reg
+        opt c+
+
         pha
         phx
 
@@ -29,4 +31,6 @@
 @       plx
         pla
         rts
+
+        opt c-
 .endp

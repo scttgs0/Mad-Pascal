@@ -2,9 +2,11 @@
 ; unit CRT: TextMode
 
 .proc	@ClrScr
+        opt c+
+
         phx
         phy
-    
+
         lda IOPAGE_CTRL
         pha
 
@@ -15,7 +17,7 @@
         stz tempzp
         stz ScreenPointer
 
-        lda #>TEXT_MEM
+        lda #>CS_TEXT_MEM_PTR
         sta tempzp+1
         sta ScreenPointer+1
 
@@ -57,4 +59,6 @@ _skip:
         ply
         plx
         rts
+
+        opt c-
 .endp

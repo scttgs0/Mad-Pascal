@@ -36,6 +36,8 @@ asm
     lda RNG_DAT
     sta RndSeed
     stz RndSeed+1
+
+    opt c-
 end;
 
 
@@ -55,10 +57,12 @@ begin
         eor RNG_DAT
         adc RNG_DAT+1
         sta Result
-    
+
         stz Result+1
         stz Result+2
         stz Result+3
+
+        opt c-
     end;
 
     Result:= 1 - Result;
@@ -80,14 +84,16 @@ begin
         eor RNG_DAT+1
         eor RNG_DAT
         sta Result+1
-    
+
         adc RNG_DAT+1
         and #$7f
         sta Result+2
-    
+
         stz Result
         lda #$3f
         sta Result+3
+
+        opt c-
     end;
 
     Result:= 1 - Result;
@@ -108,7 +114,7 @@ begin
         eor RNG_DAT+1
         eor RNG_DAT
         sta a
-    
+
         adc RNG_DAT+1
         and #$7f
         sta a+1
@@ -128,19 +134,23 @@ Generate random number
 @returns: byte
 *)
 asm
+    opt c+
+
     lda range
     bne _retry
 
     ldy RNG_DAT
     bra _done
 
-_retry:	
+_retry:
     ldy RNG_DAT
     cpy range
     bcs _retry
 
 _done:
     sty Result
+
+    opt c-
 end;
 
 
@@ -165,20 +175,20 @@ begin
         asm
             lda range+1
             bpl _plus
-        
+
             lda Result+1
             bmi _ok
             bpl _sign
-        
+
         _plus:
             lda Result+1
             bpl _ok
-        
+
         _sign:
             lda #0
             sub Result
             sta Result
-        
+
             lda #0
             sbc Result+1
             sta Result+1
