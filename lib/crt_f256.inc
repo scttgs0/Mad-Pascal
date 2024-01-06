@@ -7,7 +7,33 @@ ClrEol clears the current line, starting from the cursor position, to the end of
 The cursor doesn't move.
 *)
 begin
+    asm
+        opt c+
 
+    _try:
+        ; numerator = ScreenPointer - TEXTMEM
+        lda ScreenPointer
+        sta DIVU_NUMR
+        sec
+        lda ScreenPointer+1
+        sbc #>CS_TEXT_MEM_PTR
+        sta DIVU_NUMR+1
+
+        ; denominator = ScreenWidth
+        mwa MAIN.SYSTEM.ScreenWidth DIVU_DENOM
+
+        ; check if there is a remainder
+        lda DIVU_RESULT_R
+        beq _done
+
+        ; draw a space character
+        lda #32
+        jsr @putchar
+        bra _try
+
+    _done:
+        opt c-
+    end;
 end;
 
 
@@ -16,7 +42,11 @@ procedure CursorOff;
 @description: Hide cursor
 *)
 begin
-
+    asm
+        lda CURSOR_CTRL
+        ora #%1
+        sta CURSOR_CTRL
+    end;
 end;
 
 
@@ -25,7 +55,11 @@ procedure CursorOn;
 @description: Display cursor
 *)
 begin
-
+    asm
+        lda CURSOR_CTRL
+        and #~%1
+        sta CURSOR_CTRL
+    end;
 end;
 
 
@@ -34,7 +68,9 @@ procedure ClrScr;
 @description: Clear screen
 *)
 begin
-
+    asm
+        jsr @clrscr
+    end;
 end;
 
 
@@ -74,7 +110,10 @@ procedure TextBackground(a: byte); assembler;
 @param: a - color value 0..255
 *)
 asm
-
+    lda CursorColor
+    and #%11110000
+    ora a
+    sta CursorColor
 end;
 
 
@@ -85,7 +124,16 @@ procedure TextColor(a: byte); assembler;
 @param: a - color value 0..255
 *)
 asm
-
+    lda CursorColor
+    and #15
+    sta CursorColor
+    lda a
+    asl
+    asl
+    asl
+    asl
+    ora CursorColor
+    sta CursorColor
 end;
 
 
@@ -96,10 +144,10 @@ procedure Delay(count: word); assembler;
 @param: count - number of milliseconds
 *)
 asm
-	ldy #$90
+    ldy #$90
 
 loop	dey
-	bne loop
+    bne loop
 
 end;
 
@@ -131,7 +179,30 @@ the origin of the current window. The origin is located at (1,1), the upper-left
 *)
 
 asm
+    opt c+
 
+    lda x
+    dec
+    pha
+
+    lda y
+    dec
+    sta MULU_A
+    stz MULU_A+1
+
+    lda #system.ScreenWidth
+    sta MULU_B
+    stz MULU_B+1
+
+    pla
+    clc
+    adc MULU_RESULT
+    sta ScreenPointer
+    lda MULU_RESULT+1
+    adc #>CS_TEXT_MEM_PTR
+    sta ScreenPointer+1
+
+    opt c-
 end;
 
 
@@ -143,7 +214,21 @@ function WhereX: byte; assembler;
 *)
 
 asm
+    ; numerator = ScreenPointer - TEXTMEM
+    lda ScreenPointer
+    sta DIVU_NUMR
+    sec
+    lda ScreenPointer+1
+    sbc #>CS_TEXT_MEM_PTR
+    sta DIVU_NUMR+1
 
+    ; denominator = ScreenWidth
+    mwa MAIN.SYSTEM.ScreenWidth DIVU_DENOM
+
+    ; remainder is the column number
+    lda DIVU_RESULT_R
+    inc
+    sta Result
 end;
 
 
@@ -155,7 +240,21 @@ function WhereY: byte; assembler;
 *)
 
 asm
+    ; numerator = ScreenPointer - TEXTMEM
+    lda ScreenPointer
+    sta DIVU_NUMR
+    sec
+    lda ScreenPointer+1
+    sbc #>CS_TEXT_MEM_PTR
+    sta DIVU_NUMR+1
 
+    ; denominator = ScreenWidth
+    mwa MAIN.SYSTEM.ScreenWidth DIVU_DENOM
+
+    ; quotient is the row number
+    lda DIVU_RESULT_Q
+    inc
+    sta Result
 end;
 
 
@@ -166,7 +265,48 @@ procedure TextMode(Mode: byte); assembler;
 @param: Mode - unused value
 *)
 asm
+    lda Mode
+    cmp #BW40
+    beq _320x240
+    cmp #CO40
+    beq _320x240
+    cmp #BW80
+    beq _640x480
+    cmp #CO80
+    beq _640x480
 
+; default is 640x480, 80x60
+_640x480:
+    lda #80
+    sta system.ScreenWidth
+    lda #60
+    sta system.ScreenHeight
+
+    lda #1	; text only
+    ldy #0	; regular text
+    jmp _done
+
+; 320x40, 40x30
+_320x240:
+    lda #40
+    sta system.ScreenWidth
+    lda #30
+    sta system.ScreenHeight
+
+    lda #1	; text only
+    ldy #%110	; double x and y text
+
+_done:
+    sta MASTER_CTRL_L
+    sty MASTER_CTRL_H
+
+; give monitor time to resync
+    ldy #20
+_delay:
+    inc
+    bne _delay
+    dey
+    bne _delay
 end;
 
 
