@@ -70,7 +70,11 @@ BAT
 ### [Commodore Plus/4](https://github.com/tebe6502/Mad-Pascal/tree/master/samples/c4plus)
     mp.exe -t c4p filename.pas -ipath:<MadPascalPath>\lib
     mads.exe filename.a65 -x -i:<MadPascalPath>\base
-    
+
+### [Foenix F256](https://github.com/tebe6502/Mad-Pascal/tree/master/samples/f256)
+    mp -t f256 filename.pas -ipath:<MadPascalPath>/lib
+    mads filename.a65 -x -i:<MadPascalPath>/base
+
 ### [RAW](https://github.com/tebe6502/Mad-Pascal/tree/master/samples/raw)
     mp.exe -t raw filename.pas -ipath:<MadPascalPath>\lib
     mads.exe filename.a65 -x -i:<MadPascalPath>\base
