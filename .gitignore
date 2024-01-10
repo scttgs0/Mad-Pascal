@@ -3,6 +3,7 @@
 *.ppu
 *.lst
 *.obx
+*.pgx
 *.a65
 mp
 test/config.ini
