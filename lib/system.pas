@@ -292,7 +292,7 @@ var	ScreenWidth: smallint = 40;	(* @var current screen width *)
 	ScreenHeight: smallint = 24;	(* @var current screen height *)
 {$else}
 var	ScreenWidth: smallint = 80;     (* @var current screen width *)
-    ScreenHeight: smallint = 60;    (* @var current screen height *)
+	ScreenHeight: smallint = 60;    (* @var current screen height *)
 {$endif}
 
 	DateSeparator: Char = '-';
