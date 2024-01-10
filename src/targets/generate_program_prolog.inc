@@ -200,25 +200,29 @@ if Pass = CODEGENERATIONPASS then begin
   asm65(#9'org CODEORIGIN');
  end else begin
   for header in target.header do
-   if (header = 'END') then break else
-    if header <> '' then asm65(#9''+header) else asm65;
+    if (header = 'END') then break else
+      if header <> '' then asm65(#9''+header) else asm65;
+
+  if target.id = 'f256' then begin
+    asm65;
+    asm65(#9'opt h-');
+    asm65(#9'.by $50,$47,$58,$01,$00,$00,$20,$00');
+    asm65(#9'org $' + IntToHex(target.codeorigin, 4));
+  end;
 
   if target.id = 'raw' then begin
+    asm65;
+    asm65(#9'opt h-f+');
+    asm65;
+    asm65(#9'org $' + IntToHex(raw.codeorigin, 4));
+    asm65(#9'jmp START');
+    asm65;
 
-   asm65;
-   asm65(#9'opt h-f+');
-   asm65;
-   asm65(#9'org $' + IntToHex(raw.codeorigin, 4));
-   asm65(#9'jmp START');
-   asm65;
-
-   CODEORIGIN_BASE := target.codeorigin + 3;
-
+    CODEORIGIN_BASE := target.codeorigin + 3;
   end else
-   CODEORIGIN_BASE := target.codeorigin;
+    CODEORIGIN_BASE := target.codeorigin;
 
   asm65('CODEORIGIN');
-
  end;
 
 
