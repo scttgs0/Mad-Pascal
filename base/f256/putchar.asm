@@ -2,20 +2,31 @@
 .proc   @putchar (.byte a) .reg
         opt c+
 
-        pha
         phx
+        phy
+        tay
 
-        ldx #@iopagectrl(iopPage2)
+        lda IOPAGE_CTRL
+        pha
+
+        tya
+        cmp #eol
+        bne _1
+
+        stz CursorColumn
+        inc CursorRow
+        bra @+
+
+_1      ldx #@iopagectrl(iopPage2)
         stx IOPAGE_CTRL
 
+        tya
         sta (ScreenPointer)
 
         inc IOPAGE_CTRL
 
         lda #$10 ;CursorColor HACK:
         sta (ScreenPointer)
-
-        stz IOPAGE_CTRL
 
         inc ScreenPointer
         bne @+
@@ -28,8 +39,11 @@
         stz ScreenPointer
         stz ScreenPointer+1
 
-@       plx
-        pla
+@       pla
+        sta IOPAGE_CTRL
+
+        ply
+        plx
         rts
 
         opt c-
