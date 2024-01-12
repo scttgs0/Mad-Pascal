@@ -13,45 +13,54 @@
         lda #@iopagectrl(iopPage2)
         sta IOPAGE_CTRL
 
-        stz tempzp
-        stz ScreenPointer
-        ldx CursorColor
+        ldx #$00                                ; text color (black:black)
+        stz CursorColumn
+        stz CursorRow
 
         lda #>CS_TEXT_MEM_PTR
-        sta tempzp+1
         sta ScreenPointer+1
-
-;   assuming 80x60=$12c0
-        ldy #>(CS_TEXT_MEM_PTR+(80*60))
+        lda #<CS_TEXT_MEM_PTR
+        sta ScreenPointer
 
         lda MASTER_CTRL_H
-        and #@masterctrlh(mcTextDoubleX)        ; check screen mode for double x (40 or 80 columns)
+        and #@masterctrlh(mcTextDoubleX)        ; check screen mode for double-x (40 or 80 columns)
         beq _in640x480
 
-;   assuming 40x30=$04b0
-        ldy #>(CS_TEXT_MEM_PTR+(40*30))
+;   40x30=$04B0
+_in320x240:
+        lda #>(CS_TEXT_MEM_PTR+$04B0)
+        sta tempzp+1
+        lda #<(CS_TEXT_MEM_PTR+$04B0)
 
+        bra _1
+
+;   80x60=$12C0
 _in640x480:
-        sty tempzp+2
+        lda #>(CS_TEXT_MEM_PTR+$12C0)
+        sta tempzp+1
+        lda #<(CS_TEXT_MEM_PTR+$12C0)
 
-        ldy #0
+_1      tay
+        stz tempzp
+
 _loop:
         lda #' '
-        sta (tempzp),y
+        sta (tempzp),Y
 
         inc IOPAGE_CTRL
-        txa                 ; cursor color
-        sta (tempzp),y
+        txa                 ; text color
+        sta (tempzp),Y
 
         dec IOPAGE_CTRL
 
-        iny
+        dey
+        cpy #$FF
         bne _loop
 
-        inc tempzp+1
+        dec tempzp+1
         lda tempzp+1
-        cmp tempzp+2
-        bne _loop
+        cmp ScreenPointer+1
+        bcs _loop
 
 _skip:
         pla
