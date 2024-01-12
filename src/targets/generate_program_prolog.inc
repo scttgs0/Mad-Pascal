@@ -206,8 +206,9 @@ if Pass = CODEGENERATIONPASS then begin
   if target.id = 'f256' then begin
     asm65;
     asm65(#9'opt h-');
-    asm65(#9'.by $50,$47,$58,$01,$00,$00,$20,$00');
+    asm65(#9'.by $50,$47,$58,$03,$00,$20,$00,$00');
     asm65(#9'org $' + IntToHex(target.codeorigin, 4));
+    asm65(#9'jmp START');
   end;
 
   if target.id = 'raw' then begin
