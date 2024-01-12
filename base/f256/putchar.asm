@@ -12,14 +12,14 @@
 
         inc IOPAGE_CTRL
 
-        lda CursorColor
+        lda #$10 ;CursorColor HACK:
         sta (ScreenPointer)
 
         stz IOPAGE_CTRL
 
         inc ScreenPointer
-
         bne @+
+
         inc ScreenPointer+1
         lda ScreenPointer+1             ; lazy check for overrun
         cmp #>(CS_TEXT_MEM_PTR+80*60)
