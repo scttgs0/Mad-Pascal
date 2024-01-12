@@ -13,9 +13,9 @@
         lda #@iopagectrl(iopPage2)
         sta IOPAGE_CTRL
 
-        ldx CursorColor
         stz tempzp
         stz ScreenPointer
+        ldx CursorColor
 
         lda #>CS_TEXT_MEM_PTR
         sta tempzp+1
@@ -23,6 +23,7 @@
 
 ;   assuming 80x60=$12c0
         ldy #>(CS_TEXT_MEM_PTR+(80*60))
+
         lda MASTER_CTRL_H
         and #@masterctrlh(mcTextDoubleX)        ; check screen mode for double x (40 or 80 columns)
         beq _in640x480
