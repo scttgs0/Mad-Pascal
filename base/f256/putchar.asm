@@ -103,6 +103,9 @@ _XIT    rts
 .proc   @scroll
         opt c+
 
+        ldx #@iopagectrl(iopPage2)      ;; DEBUG: $217C
+        stx IOPAGE_CTRL
+
         lda #>CS_TEXT_MEM_PTR
         sta scrnCursor+1
         lda #<CS_TEXT_MEM_PTR
@@ -112,15 +115,22 @@ _XIT    rts
         and #@masterctrlh(mcTextDoubleX)        ; check screen mode for double-x (40 or 80 columns)
         beq _in640x480
 
-        lda #>CS_TEXT_MEM_PTR+40
+        lda #>(CS_TEXT_MEM_PTR+40)
         sta tempzp+3
-        lda #<CS_TEXT_MEM_PTR+40
+        lda #<(CS_TEXT_MEM_PTR+40)
         sta tempzp+2
 
         ldx #29
 _next1  ldy #39
-_next2  lda (tempzp+2),Y
+_next2  lda (tempzp+2),Y                        ; move the text map up one line for this row
         sta (scrnCursor),Y
+
+        inc IOPAGE_CTRL
+
+        lda (tempzp+2),Y                        ; move the text color map up
+        sta (scrnCursor),Y
+
+        dec IOPAGE_CTRL
 
         dey
         bpl _next2
@@ -148,24 +158,40 @@ _next2  lda (tempzp+2),Y
         lda #' '
 _next3  sta (scrnCursor),Y
 
+        inc IOPAGE_CTRL
+
+        pha
+        lda #$00
+        sta (scrnCursor),Y
+        pla
+
+        dec IOPAGE_CTRL
+
         dey
         bpl _next3
 
         bra _XIT
 
 _in640x480:
-        lda #>CS_TEXT_MEM_PTR+80
+        lda #>(CS_TEXT_MEM_PTR+80)
         sta tempzp+3
-        lda #<CS_TEXT_MEM_PTR+80
+        lda #<(CS_TEXT_MEM_PTR+80)
         sta tempzp+2
 
         ldx #59
 _next4  ldy #79
-_next5  lda (tempzp+2),Y
+_next5  lda (tempzp+2),Y                        ; move the text map up one line for this row
         sta (scrnCursor),Y
 
+        inc IOPAGE_CTRL
+
+        lda (tempzp+2),Y                        ; move the text color map up
+        sta (scrnCursor),Y
+
+        dec IOPAGE_CTRL
+
         dey
-        bpl _next4
+        bpl _next5
 
         lda scrnCursor
         clc
@@ -184,11 +210,20 @@ _next5  lda (tempzp+2),Y
         sta tempzp+3
 
         dex
-        bne _next5
+        bne _next4
 
         ldy #79
         lda #' '
 _next6  sta (scrnCursor),Y
+
+        inc IOPAGE_CTRL
+
+        pha
+        lda #$00
+        sta (scrnCursor),Y
+        pla
+
+        dec IOPAGE_CTRL
 
         dey
         bpl _next6
@@ -223,11 +258,11 @@ _next1  lda scrnCursor
         clc
         adc tempzp
         sta scrnCursor
-        bcc _1
+        lda scrnCursor+1
+        adc #0
+        sta scrnCursor+1
 
-        inc scrnCursor+1
-
-_1      dey
+        dey
         bne _next1
 
 _XIT    rts
