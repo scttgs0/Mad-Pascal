@@ -13,33 +13,38 @@
         cmp #eol
         bne _1
 
+        jsr @cursorLimits
+
         stz CursorColumn
         inc CursorRow
-        bra @+
+
+        jsr @cursorLimits
+        jsr @resetCursorPointer
+        bra _XIT
 
 _1      ldx #@iopagectrl(iopPage2)
         stx IOPAGE_CTRL
 
-        tya
-        sta (ScreenPointer)
+        sta (scrnCursor)
 
         inc IOPAGE_CTRL
 
         lda #$10 ;CursorColor HACK:
-        sta (ScreenPointer)
+        sta (scrnCursor)
 
-        inc ScreenPointer
-        bne @+
+        inc CursorColumn
+        inc scrnCursor
+        bne _XIT
 
-        inc ScreenPointer+1
-        lda ScreenPointer+1             ; lazy check for overrun
+        inc scrnCursor+1
+        lda scrnCursor+1             ; lazy check for overrun
         cmp #>(CS_TEXT_MEM_PTR+80*60)
-        bne @+
+        bne _XIT
 
-        stz ScreenPointer
-        stz ScreenPointer+1
+        jsr @cursorLimits
+        jsr @resetCursorPointer
 
-@       pla
+_XIT    pla
         sta IOPAGE_CTRL
 
         ply
@@ -48,3 +53,182 @@ _1      ldx #@iopagectrl(iopPage2)
 
         opt c-
 .endp
+
+
+.proc   @cursorLimits
+        opt c+
+
+        lda MASTER_CTRL_H
+        and #@masterctrlh(mcTextDoubleX)        ; check screen mode for double-x (40 or 80 columns)
+        beq _1
+
+        ldx #40
+        .by $2C
+_1      ldx #80
+        stx tempzp
+
+_next1  lda CursorColumn
+        cmp tempzp
+        bcc _chkRow
+
+        sec
+        sbc tempzp
+        sta CursorColumn
+        inc CursorRow
+
+        bra _next1
+
+_chkRow lda MASTER_CTRL_H
+        and #@masterctrlh(mcTextDoubleX)        ; check screen mode for double-x (40 or 80 columns)
+        beq _2
+
+        ldx #30
+        .by $2C
+_2      ldx #60
+        stx tempzp
+
+_next2  lda CursorRow
+        cmp tempzp
+        bcc _XIT
+
+        jsr @scroll
+        bra _next2
+
+_XIT    rts
+
+        opt c-
+.endp
+
+
+.proc   @scroll
+        opt c+
+
+        lda #>CS_TEXT_MEM_PTR
+        sta scrnCursor+1
+        lda #<CS_TEXT_MEM_PTR
+        sta scrnCursor
+
+        lda MASTER_CTRL_H
+        and #@masterctrlh(mcTextDoubleX)        ; check screen mode for double-x (40 or 80 columns)
+        beq _in640x480
+
+        lda #>CS_TEXT_MEM_PTR+40
+        sta tempzp+3
+        lda #<CS_TEXT_MEM_PTR+40
+        sta tempzp+2
+
+        ldx #29
+_next1  ldy #39
+_next2  lda (tempzp+2),Y
+        sta (scrnCursor),Y
+
+        dey
+        bpl _next2
+
+        lda scrnCursor
+        clc
+        adc #40
+        sta scrnCursor
+        lda scrnCursor+1
+        adc #0
+        sta scrnCursor+1
+
+        lda tempzp+2
+        clc
+        adc #40
+        sta tempzp+2
+        lda tempzp+3
+        adc #0
+        sta tempzp+3
+
+        dex
+        bne _next1
+
+        ldy #39
+        lda #' '
+_next3  sta (scrnCursor),Y
+
+        dey
+        bpl _next3
+
+        bra _XIT
+
+_in640x480:
+        lda #>CS_TEXT_MEM_PTR+80
+        sta tempzp+3
+        lda #<CS_TEXT_MEM_PTR+80
+        sta tempzp+2
+
+        ldx #59
+_next4  ldy #79
+_next5  lda (tempzp+2),Y
+        sta (scrnCursor),Y
+
+        dey
+        bpl _next4
+
+        lda scrnCursor
+        clc
+        adc #80
+        sta scrnCursor
+        lda scrnCursor+1
+        adc #0
+        sta scrnCursor+1
+
+        lda tempzp+2
+        clc
+        adc #80
+        sta tempzp+2
+        lda tempzp+3
+        adc #0
+        sta tempzp+3
+
+        dex
+        bne _next5
+
+        ldy #79
+        lda #' '
+_next6  sta (scrnCursor),Y
+
+        dey
+        bpl _next6
+
+_XIT    dec CursorRow
+        rts
+
+        opt c-
+.endp
+
+
+.proc   @resetCursorPointer
+        lda #>CS_TEXT_MEM_PTR
+        sta scrnCursor+1
+        lda #<CS_TEXT_MEM_PTR
+        sta scrnCursor
+
+        lda MASTER_CTRL_H
+        and #@masterctrlh(mcTextDoubleX)        ; check screen mode for double-x (40 or 80 columns)
+        beq _in640x480
+
+        ldx #40
+        .by $2C
+_in640x480:
+        ldx #80
+        stx tempzp
+
+        ldy CursorRow
+        beq _XIT
+
+_next1  lda scrnCursor
+        clc
+        adc tempzp
+        sta scrnCursor
+        bcc _1
+
+        inc scrnCursor+1
+
+_1      dey
+        bne _next1
+
+_XIT    rts
+        .endp

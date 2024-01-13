@@ -11,11 +11,11 @@ begin
         opt c+
 
     _try:
-        ; numerator = ScreenPointer - TEXTMEM
-        lda ScreenPointer
+        ; numerator = scrnCursor - TEXTMEM
+        lda scrnCursor
         sta DIVU_NUMR
         sec
-        lda ScreenPointer+1
+        lda scrnCursor+1
         sbc #>CS_TEXT_MEM_PTR
         sta DIVU_NUMR+1
 
@@ -197,10 +197,10 @@ asm
     pla
     clc
     adc MULU_RESULT
-    sta ScreenPointer
+    sta scrnCursor
     lda MULU_RESULT+1
     adc #>CS_TEXT_MEM_PTR
-    sta ScreenPointer+1
+    sta scrnCursor+1
 
     opt c-
 end;
@@ -214,11 +214,11 @@ function WhereX: byte; assembler;
 *)
 
 asm
-    ; numerator = ScreenPointer - TEXTMEM
-    lda ScreenPointer
+    ; numerator = scrnCursor - TEXTMEM
+    lda scrnCursor
     sta DIVU_NUMR
     sec
-    lda ScreenPointer+1
+    lda scrnCursor+1
     sbc #>CS_TEXT_MEM_PTR
     sta DIVU_NUMR+1
 
@@ -240,11 +240,11 @@ function WhereY: byte; assembler;
 *)
 
 asm
-    ; numerator = ScreenPointer - TEXTMEM
-    lda ScreenPointer
+    ; numerator = scrnCursor - TEXTMEM
+    lda scrnCursor
     sta DIVU_NUMR
     sec
-    lda ScreenPointer+1
+    lda scrnCursor+1
     sbc #>CS_TEXT_MEM_PTR
     sta DIVU_NUMR+1
 
