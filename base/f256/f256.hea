@@ -1,7 +1,7 @@
 
 tempzp                  = $A0           ; 16 bytes
 
-ScreenPointer           = $B0           ; [word]
+scrnCursor              = $B0           ; [word]
 CursorColumn            = $B2
 CursorRow               = $B3
 CursorColor             = $B4

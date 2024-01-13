@@ -121,10 +121,10 @@ asm
 	clc
 	lda MULU_RESULT
 	adc col
-	sta ScreenPointer
+	sta scrnCursor
 	lda MULU_RESULT+1		// TODO:
 	adc #>CS_TEXT_MEM_PTR
-	sta ScreenPointer+1
+	sta scrnCursor+1
 
     opt c-
 end;
@@ -260,7 +260,7 @@ begin
 		sta IOPAGE_CTRL
 
 	// set cursor screen pointer to top left corner
-		mwa #CS_TEXT_MEM_PTR ScreenPointer
+		mwa #CS_TEXT_MEM_PTR scrnCursor
 
 		lda #0
 		sta CursorColumn

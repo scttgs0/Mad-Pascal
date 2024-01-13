@@ -18,9 +18,9 @@
         stz CursorRow
 
         lda #>CS_TEXT_MEM_PTR
-        sta ScreenPointer+1
+        sta scrnCursor+1
         lda #<CS_TEXT_MEM_PTR
-        sta ScreenPointer
+        sta scrnCursor
 
         lda MASTER_CTRL_H
         and #@masterctrlh(mcTextDoubleX)        ; check screen mode for double-x (40 or 80 columns)
@@ -59,7 +59,7 @@ _loop:
 
         dec tempzp+1
         lda tempzp+1
-        cmp ScreenPointer+1
+        cmp scrnCursor+1
         bcs _loop
 
 _skip:
