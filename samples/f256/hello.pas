@@ -4,6 +4,6 @@ program HelloF256;
 uses crt;
 
 begin
-    ClrScr();
+    ClrScr;
     writeln('Hello World!');
 end.
