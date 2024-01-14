@@ -28,16 +28,12 @@ procedure Randomize; assembler;
 Initialize random number generator
 *)
 asm
-    opt c+
-
     lda #@rngctrl(rcEnable)
     sta RNG_CTRL
 
     lda RNG_DAT
     sta RndSeed
     stz RndSeed+1
-
-    opt c-
 end;
 
 
@@ -50,8 +46,6 @@ Generate random number
 *)
 begin
     asm
-        opt c+
-
         lda RNG_DAT
         eor RNG_DAT+1
         eor RNG_DAT
@@ -61,8 +55,6 @@ begin
         stz Result+1
         stz Result+2
         stz Result+3
-
-        opt c-
     end;
 
     Result:= 1 - Result;
@@ -78,8 +70,6 @@ Generate random number
 *)
 begin
     asm
-        opt c+
-
         lda RNG_DAT
         eor RNG_DAT+1
         eor RNG_DAT
@@ -92,8 +82,6 @@ begin
         stz Result
         lda #$3f
         sta Result+3
-
-        opt c-
     end;
 
     Result:= 1 - Result;
@@ -134,8 +122,6 @@ Generate random number
 @returns: byte
 *)
 asm
-    opt c+
-
     lda range
     bne _retry
 
@@ -149,8 +135,6 @@ _retry:
 
 _done:
     sty Result
-
-    opt c-
 end;
 
 

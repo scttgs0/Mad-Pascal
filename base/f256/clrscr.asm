@@ -2,8 +2,6 @@
 ; unit CRT: TextMode
 
 .proc	@ClrScr
-        opt c+
-
         phx
         phy
 
@@ -69,6 +67,4 @@ _skip:
         ply
         plx
         rts
-
-        opt c-
 .endp

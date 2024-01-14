@@ -1,7 +1,5 @@
 
 .proc   @putchar (.byte a) .reg
-        opt c+
-
         phx
         phy
         tay
@@ -50,14 +48,10 @@ _XIT    pla
         ply
         plx
         rts
-
-        opt c-
 .endp
 
 
 .proc   @cursorLimits
-        opt c+
-
         lda MASTER_CTRL_H
         and #@masterctrlh(mcTextDoubleX)        ; check screen mode for double-x (40 or 80 columns)
         beq _1
@@ -95,14 +89,10 @@ _next2  lda CursorRow
         bra _next2
 
 _XIT    rts
-
-        opt c-
 .endp
 
 
 .proc   @scroll
-        opt c+
-
         ldx #@iopagectrl(iopPage2)      ;; DEBUG: $217C
         stx IOPAGE_CTRL
 
@@ -230,8 +220,6 @@ _next6  sta (scrnCursor),Y
 
 _XIT    dec CursorRow
         rts
-
-        opt c-
 .endp
 
 

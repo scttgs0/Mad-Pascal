@@ -8,8 +8,6 @@ The cursor doesn't move.
 *)
 begin
     asm
-        opt c+
-
     _try:
         ; numerator = scrnCursor - TEXTMEM
         lda scrnCursor
@@ -32,7 +30,6 @@ begin
         bra _try
 
     _done:
-        opt c-
     end;
 end;
 
@@ -179,8 +176,6 @@ the origin of the current window. The origin is located at (1,1), the upper-left
 *)
 
 asm
-    opt c+
-
     lda x
     dec
     pha
@@ -201,8 +196,6 @@ asm
     lda MULU_RESULT+1
     adc #>CS_TEXT_MEM_PTR
     sta scrnCursor+1
-
-    opt c-
 end;
 
 

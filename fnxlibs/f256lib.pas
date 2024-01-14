@@ -108,8 +108,6 @@ end;
 
 procedure CursorAt(col, row: byte); assembler;
 asm
-    opt c+
-
 	lda row
 	sta MULU_A
 	stz MULU_A+1
@@ -125,8 +123,6 @@ asm
 	lda MULU_RESULT+1		// TODO:
 	adc #>CS_TEXT_MEM_PTR
 	sta scrnCursor+1
-
-    opt c-
 end;
 
 procedure Print(s: string);// assembler;
