@@ -40,6 +40,11 @@ var
 	Consol: byte absolute $d01f;		// CONSOL register
 {$ENDIF}
 
+{$IFDEF F256}
+var
+	TextAttr: byte = 0;			(* @var Text Attribute *)
+{$ENDIF}
+
 const
 {$IFDEF ATARI}
 	CN_START_SELECT_OPTION	= 0;		// Consol values

@@ -41,7 +41,7 @@ procedure CursorOff;
 begin
     asm
         lda CURSOR_CTRL
-        ora #%1
+        and #~%1
         sta CURSOR_CTRL
     end;
 end;
@@ -54,7 +54,7 @@ procedure CursorOn;
 begin
     asm
         lda CURSOR_CTRL
-        and #~%1
+        ora #%1
         sta CURSOR_CTRL
     end;
 end;
@@ -107,10 +107,10 @@ procedure TextBackground(a: byte); assembler;
 @param: a - color value 0..255
 *)
 asm
-    lda CursorColor
+    lda TextAttr
     and #%11110000
     ora a
-    sta CursorColor
+    sta TextAttr
 end;
 
 
@@ -121,16 +121,16 @@ procedure TextColor(a: byte); assembler;
 @param: a - color value 0..255
 *)
 asm
-    lda CursorColor
+    lda TextAttr
     and #15
-    sta CursorColor
+    sta TextAttr
     lda a
     asl
     asl
     asl
     asl
-    ora CursorColor
-    sta CursorColor
+    ora TextAttr
+    sta TextAttr
 end;
 
 
@@ -185,7 +185,7 @@ asm
     sta MULU_A
     stz MULU_A+1
 
-    lda #system.ScreenWidth
+    lda Main.System.ScreenWidth
     sta MULU_B
     stz MULU_B+1
 
