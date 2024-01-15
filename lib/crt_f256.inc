@@ -41,7 +41,7 @@ procedure CursorOff;
 begin
     asm
         lda CURSOR_CTRL
-        ora #%1
+        and #~%1
         sta CURSOR_CTRL
     end;
 end;
@@ -54,7 +54,7 @@ procedure CursorOn;
 begin
     asm
         lda CURSOR_CTRL
-        and #~%1
+        ora #%1
         sta CURSOR_CTRL
     end;
 end;
