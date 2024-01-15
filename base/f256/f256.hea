@@ -4,7 +4,7 @@ tempzp                  = $A0           ; 16 bytes
 scrnCursor              = $B0           ; [word]
 CursorColumn            = $B2
 CursorRow               = $B3
-CursorColor             = $B4
+; replaced with Crt.TextAttr  CursorColor             = $B4
 
 MAIN.GRAPH.WIN_TOP      = $C0           ; [word]
 MAIN.GRAPH.WIN_BOTTOM   = $C2           ; [word]
