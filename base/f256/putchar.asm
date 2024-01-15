@@ -2,12 +2,10 @@
 .proc   @putchar (.byte a) .reg
         phx
         phy
-        tay
 
-        lda IOPAGE_CTRL
-        pha
+        ldy IOPAGE_CTRL
+        phy
 
-        tya
         cmp #eol
         bne _1
 
@@ -27,7 +25,7 @@ _1      ldx #@iopagectrl(iopPage2)
 
         inc IOPAGE_CTRL
 
-        lda #$10 ;CursorColor HACK:
+        lda Main.Crt.TextAttr
         sta (scrnCursor)
 
         inc CursorColumn
