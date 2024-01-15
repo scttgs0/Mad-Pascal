@@ -107,10 +107,10 @@ procedure TextBackground(a: byte); assembler;
 @param: a - color value 0..255
 *)
 asm
-    lda CursorColor
+    lda TextAttr
     and #%11110000
     ora a
-    sta CursorColor
+    sta TextAttr
 end;
 
 
@@ -121,16 +121,16 @@ procedure TextColor(a: byte); assembler;
 @param: a - color value 0..255
 *)
 asm
-    lda CursorColor
+    lda TextAttr
     and #15
-    sta CursorColor
+    sta TextAttr
     lda a
     asl
     asl
     asl
     asl
-    ora CursorColor
-    sta CursorColor
+    ora TextAttr
+    sta TextAttr
 end;
 
 
