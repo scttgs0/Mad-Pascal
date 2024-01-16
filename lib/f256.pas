@@ -81,8 +81,8 @@ var
 //-----------------------------------------------
 //  IO Bank 01
 
-    FONT_MEMORY_BANK0:      byte absolute $C000;
-    FONT_MEMORY_BANK1:      byte absolute $C800;
+    FONT_MEMORY_BANK0:      array [0..2] of byte absolute $C000;
+    FONT_MEMORY_BANK1:      array [0..2] of byte absolute $C800;
 
     GRPH_LUT0_PTR:          array [0..1023] of byte absolute $D000;
     GRPH_LUT1_PTR:          array [0..1023] of byte absolute $D400;
