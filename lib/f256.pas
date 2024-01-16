@@ -1,9 +1,44 @@
-
 unit f256;
 
 interface
 
+type
+
+    masterctrll = (
+        mcTextOn        = $01,
+        mcOverlayOn     = $02,
+        mcGraphicsOn    = $04,
+        mcBitmapOn      = $08,
+        mcTileMapOn     = $10,
+        mcSpriteOn      = $20,
+        mcGammaOn       = $40);
+
+    masterctrlh = (
+        mcVideoMode240  = $00,
+        mcVideoMode200  = $01,
+        mcTextDoubleX   = $02,
+        mcTextDoubleY   = $04,
+        mcDisableVideo  = $08,
+        mcTransparent   = $10,
+        mcFontSet1      = $20);
+
+    spritectrl = (
+        scEnable            = $01,
+        scLUT0              = $00,
+        scLUT1              = $02,
+        scLUT2              = $04,
+        scLUT3              = $06,
+        scDEPTH0            = $00,
+        scDEPTH1            = $08,
+        scDEPTH2            = $10,
+        scDEPTH3            = $18,
+        scSIZE_32           = $00,
+        scSIZE_24           = $20,
+        scSIZE_16           = $40,
+        scSIZE_8            = $60);
+
 const
+
     mmuPage0            = $00;
     mmuPage1            = $01;
     mmuPage2            = $02;
