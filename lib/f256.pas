@@ -5,22 +5,29 @@ interface
 type
 
     masterctrll = (
-        mcTextOn        = $01,
-        mcOverlayOn     = $02,
-        mcGraphicsOn    = $04,
-        mcBitmapOn      = $08,
-        mcTileMapOn     = $10,
-        mcSpriteOn      = $20,
-        mcGammaOn       = $40);
+        mcTextOn            = $01,
+        mcOverlayOn         = $02,
+        mcGraphicsOn        = $04,
+        mcBitmapOn          = $08,
+        mcTileMapOn         = $10,
+        mcSpriteOn          = $20,
+        mcGammaOn           = $40);
 
     masterctrlh = (
-        mcVideoMode240  = $00,
-        mcVideoMode200  = $01,
-        mcTextDoubleX   = $02,
-        mcTextDoubleY   = $04,
-        mcDisableVideo  = $08,
-        mcTransparent   = $10,
-        mcFontSet1      = $20);
+        mcVideoMode240      = $00,
+        mcVideoMode200      = $01,
+        mcTextDoubleX       = $02,
+        mcTextDoubleY       = $04,
+        mcDisableVideo      = $08,
+        mcTransparent       = $10,
+        mcFontSet1          = $20);
+
+    bitmapctrl = (
+        bmcEnable           = $01,
+        bmcLUT0             = $00,
+        bmcLUT1             = $02,
+        bmcLUT2             = $04,
+        bmcLUT3             = $06);
 
     spritectrl = (
         scEnable            = $01,
@@ -74,8 +81,8 @@ var
 //-----------------------------------------------
 //  IO Bank 01
 
-    FONT_MEMORY_BANK0:      byte absolute $C000;
-    FONT_MEMORY_BANK1:      byte absolute $C800;
+    FONT_MEMORY_BANK0:      array [0..2] of byte absolute $C000;
+    FONT_MEMORY_BANK1:      array [0..2] of byte absolute $C800;
 
     GRPH_LUT0_PTR:          array [0..1023] of byte absolute $D000;
     GRPH_LUT1_PTR:          array [0..1023] of byte absolute $D400;
