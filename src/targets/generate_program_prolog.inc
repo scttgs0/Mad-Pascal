@@ -209,9 +209,9 @@ if Pass = CODEGENERATIONPASS then begin
     asm65(#9'.by $50,$47,$58,$03,$00,$20,$00,$00');
     asm65(#9'org $' + IntToHex(target.codeorigin, 4));
     asm65(#9'jmp START');
-  end;
 
-  if target.id = 'raw' then begin
+    CODEORIGIN_BASE := target.codeorigin + 3;
+  end else if target.id = 'raw' then begin
     asm65;
     asm65(#9'opt h-f+');
     asm65;
