@@ -44,6 +44,14 @@ type
         scSIZE_16           = $40,
         scSIZE_8            = $60);
 
+    tilemapctrl = (
+        tcEnable            = $01,
+        tcSmallTiles        = $10);
+
+    tilesetctrl = (
+        tsVertical          = $00,
+        tsSquare            = $08);
+
 const
 
     mmuPage0            = $00;
