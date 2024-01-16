@@ -15128,6 +15128,7 @@ var i, j, DataSegmentSize, IdentIndex: Integer;
     tmp, a: string;
     yes: Boolean;
     res: TResource;
+    rsize: string;
 begin
 
 ResetOpty;
@@ -15471,7 +15472,8 @@ asm65('.macro'#9'STATICDATA');
      resArray[i] := res;
     end;
 
-
+  rsize := '';
+  
   for i := 0 to High(resArray) - 1 do
    if resArray[i].resStream = false then begin
 
@@ -15482,6 +15484,8 @@ asm65('.macro'#9'STATICDATA');
     for j := 1 to MAXPARAMS do a:=a+' '+resArray[i].resPar[j];
 
     asm65(a);
+    asm65('.def :F256R'+inttostr(i)+' = *-$'+hexstr(resArray[i].resValue,6));
+    rsize+=' + F256R'+inttostr(i);
    end;
 
   asm65('.endl');
@@ -15490,7 +15494,7 @@ asm65('.macro'#9'STATICDATA');
   if target.id = 'f256' then begin
     if F256Outtype ='PGZ' then begin
       asm65;
-      asm65('F256BINARYSIZE'#9'= * - CODEORIGIN');
+      asm65('F256BINARYSIZE'#9'= RESOURCE - CODEORIGIN'+rsize);
       // write the last PGZ empty block length with executing address
       asm65;
       asm65(#9'.by <START,>START,^START,$00,$00,$00');
