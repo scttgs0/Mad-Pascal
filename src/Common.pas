@@ -582,6 +582,7 @@ var
 
   PublicSection : Boolean = true;
 
+  F256Outtype: string;
 
 {$IFDEF USEOPTFILE}
 

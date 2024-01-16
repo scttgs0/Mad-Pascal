@@ -15305,7 +15305,7 @@ if DATA_Atari > 0 then
 else begin
 
  asm65(#9'?adr = *');
- asm65(#9'ift (?adr < ?old_adr) && (?old_adr - ?adr < $120)');
+ asm65(#9'ift (?adr < ?old_adr) && (?old_adr - ?adr < $1)'); // originally $120- phase error tolerance?
  asm65(#9'?adr = ?old_adr');
  asm65(#9'eif');
  asm65;
@@ -15487,6 +15487,15 @@ asm65('.macro'#9'STATICDATA');
   asm65('.endl');
  end;
 
+  if target.id = 'f256' then begin
+    if F256Outtype ='PGZ' then begin
+      asm65;
+      asm65('F256BINARYSIZE'#9'= * - CODEORIGIN');
+      // write the last PGZ empty block length with executing address
+      asm65;
+      asm65(#9'.by <START,>START,^START,$00,$00,$00');
+    end;
+  end;
 
 asm65;
 asm65(#9'end');
