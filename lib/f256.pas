@@ -29,6 +29,9 @@ type
         bmcLUT2             = $04,
         bmcLUT3             = $06);
 
+    mousectrl = (
+        mcEnable           = $01);
+
     spritectrl = (
         scEnable            = $01,
         scLUT0              = $00,
@@ -112,6 +115,8 @@ var
 
 //-----------------------------------------------
 //  IO Bank 00
+
+    MOUSE_IMAGE:            byte absolute $CC00;
 
     MASTER_CTRL_L:          byte absolute $D000;
     MASTER_CTRL_H:          byte absolute $D001;
