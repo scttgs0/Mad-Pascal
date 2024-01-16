@@ -205,12 +205,34 @@ if Pass = CODEGENERATIONPASS then begin
 
   if target.id = 'f256' then begin
     asm65;
-    asm65(#9'opt c+h-');
-    asm65(#9'.by $50,$47,$58,$03,$00,$20,$00,$00');
-    asm65(#9'org $' + IntToHex(target.codeorigin, 4));
-    asm65(#9'jmp START');
+    asm65(#9'opt c+h-l+');
 
-    CODEORIGIN_BASE := target.codeorigin + 3;
+    if F256Outtype='PGX' then begin
+      asm65(#9'.by $50,$47,$58,$03,'+
+      '$'+IntToHex(target.codeorigin and $ff,2)+','+
+      '$'+IntToHex((target.codeorigin shr 8) and $ff,2)+','+
+      '$'+IntToHex((target.codeorigin shr 16) and $ff,2)+','+
+      '$'+IntToHex((target.codeorigin shr 24) and $ff,2));
+      asm65(#9'org $' + IntToHex(target.codeorigin, 4));
+      asm65(#9'jmp START');
+      CODEORIGIN_BASE := target.codeorigin + 3;
+    end
+    else
+    if F256Outtype='PGZ' then begin
+      asm65(#9'.by $5A,'+
+      '$'+IntToHex(target.codeorigin and $ff,2)+','+
+      '$'+IntToHex((target.codeorigin shr 8) and $ff,2)+','+
+      '$'+IntToHex((target.codeorigin shr 16) and $ff,2)+','+
+      '<F256BINARYSIZE,>F256BINARYSIZE,^F256BINARYSIZE');
+      asm65;
+      asm65(#9'org $' + IntToHex(target.codeorigin, 4));
+      CODEORIGIN_BASE := target.codeorigin;
+    end
+    else begin
+      asm65(#9'org $' + IntToHex(target.codeorigin, 4));
+      asm65(#9'jmp START');
+      CODEORIGIN_BASE := target.codeorigin + 3;
+    end;
   end else if target.id = 'raw' then begin
     asm65;
     asm65(#9'opt h-f+');
