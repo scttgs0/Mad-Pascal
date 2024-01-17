@@ -86,7 +86,7 @@ end;
 procedure SetMouseImage(addr: dword);
 var i: byte;
 begin
-	IOPAGE_CTRL := iopPage0;
+    IOPAGE_CTRL := iopPage0;
 
     for i := 0 to 255 do
         MOUSE_IMAGE+i := pointer(addr)[i];
@@ -95,7 +95,7 @@ end;
 
 procedure ShowMouse;
 begin
-	IOPAGE_CTRL := iopPage0;
+    IOPAGE_CTRL := iopPage0;
 
     MOUSE_CTRL := MOUSE_CTRL or mousectrl.mcEnable;
 end;
@@ -103,10 +103,9 @@ end;
 
 procedure HideMouse;
 begin
-	IOPAGE_CTRL := iopPage0;
+    IOPAGE_CTRL := iopPage0;
 
     MOUSE_CTRL := MOUSE_CTRL and not mousectrl.mcEnable;
 end;
-
 
 end.

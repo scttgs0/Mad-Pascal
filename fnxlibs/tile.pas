@@ -38,7 +38,7 @@ implementation
 procedure SetInit(idx, ctrl: byte; addr: dword);
 var tset: ^TTileSet;
 begin
-	IOPAGE_CTRL := iopPage0;
+    IOPAGE_CTRL := iopPage0;
 
     if idx <= 7 then begin
         tset[idx].ctrl := ctrl;
@@ -52,7 +52,7 @@ end;
 procedure MapInit(idx, ctrl: byte; xSize, ySize: word; addr: dword);
 var tmap: ^TTileMap;
 begin
-	IOPAGE_CTRL := iopPage0;
+    IOPAGE_CTRL := iopPage0;
 
     if idx <= 2 then begin
         tmap[idx].ctrl := ctrl;
@@ -70,7 +70,7 @@ end;
 procedure Show(idx: byte);
 var tmap: ^TTileMap;
 begin
-	IOPAGE_CTRL := iopPage0;
+    IOPAGE_CTRL := iopPage0;
 
     if idx <= 2 then
         tmap[idx].ctrl := tmap[idx].ctrl or tilemapctrl.tcEnable;
@@ -80,7 +80,7 @@ end;
 procedure Hide(idx: byte);
 var tmap: ^TTileMap;
 begin
-	IOPAGE_CTRL := iopPage0;
+    IOPAGE_CTRL := iopPage0;
 
     if idx <= 2 then
         tmap[idx].ctrl := tmap[idx].ctrl and not tilemapctrl.tcEnable;
@@ -90,7 +90,7 @@ end;
 procedure Scroll(idx: byte; xScroll, yScroll: smallint);
 var tmap: ^TTileMap;
 begin
-	IOPAGE_CTRL := iopPage0;
+    IOPAGE_CTRL := iopPage0;
 
     if idx <= 2 then begin
         tmap[idx].xScroll := xScroll;
