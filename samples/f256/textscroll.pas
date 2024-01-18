@@ -3,7 +3,7 @@ program textscroll;
 
 uses crt;
 
-var Index : integer;
+var Index : byte;
 
 begin
     ClrScr;
