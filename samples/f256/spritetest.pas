@@ -26,6 +26,10 @@ var
 
 begin
     // InitGraph(ord(masterctrll(mcGraphicsOn+mcSpriteOn)),ord(masterctrlh.mcVideoMode240));
+    IOPAGE_CTRL := iopPage0;
+
+    MASTER_CTRL_L := ord(masterctrll(mcGraphicsOn+mcSpriteOn));
+    MASTER_CTRL_H := ord(masterctrlh.mcVideoMode240);
 
     sprite.Init(0,ord(spritectrl(scEnable+scLUT0+scDEPTH0+scSIZE_16)),@sprite00);
     sprite.Pos(0,100,100);

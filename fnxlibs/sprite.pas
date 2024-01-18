@@ -40,7 +40,7 @@ implementation
 // ------------------------------------
 
 procedure Init(idx, ctrl: byte; addr: dword);
-var spr: ^TSprite;
+var spr: ^TSprite absolute $D900;
 begin
 	IOPAGE_CTRL := iopPage0;
 
@@ -54,7 +54,7 @@ end;
 
 
 procedure Show(idx: byte);
-var spr: ^TSprite;
+var spr: ^TSprite absolute $D900;
 begin
 	IOPAGE_CTRL := iopPage0;
 
@@ -63,7 +63,7 @@ end;
 
 
 procedure Hide(idx: byte);
-var spr: ^TSprite;
+var spr: ^TSprite absolute $D900;
 begin
 	IOPAGE_CTRL := iopPage0;
 
@@ -72,7 +72,7 @@ end;
 
 
 procedure Pos(idx: byte; xPos, yPos: word);
-var spr: ^TSprite;
+var spr: ^TSprite absolute $D900;
 begin
 	IOPAGE_CTRL := iopPage0;
 
