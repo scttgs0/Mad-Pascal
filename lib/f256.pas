@@ -23,8 +23,9 @@ type
         mcFontSet1          = $20);
 
     bitmapctrl = (
-        bmcEnable           = $01,
         bmcLUT0             = $00,
+
+        bmcEnable           = $01,
         bmcLUT1             = $02,
         bmcLUT2             = $04,
         bmcLUT3             = $06);
@@ -33,16 +34,17 @@ type
         mcEnable           = $01);
 
     spritectrl = (
-        scEnable            = $01,
         scLUT0              = $00,
+        scDEPTH0            = $00,
+        scSIZE_32           = $00,
+
+        scEnable            = $01,
         scLUT1              = $02,
         scLUT2              = $04,
         scLUT3              = $06,
-        scDEPTH0            = $00,
         scDEPTH1            = $08,
         scDEPTH2            = $10,
         scDEPTH3            = $18,
-        scSIZE_32           = $00,
         scSIZE_24           = $20,
         scSIZE_16           = $40,
         scSIZE_8            = $60);

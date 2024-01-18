@@ -44,12 +44,14 @@ var spr: ^TSprite absolute $D900;
 begin
 	IOPAGE_CTRL := iopPage0;
 
-    spr[idx].ctrl := ctrl;
-    spr[idx].addr[0] := byte(addr AND $FF);
-    spr[idx].addr[1] := byte((addr shr 8) AND $FF);
-    spr[idx].addr[2] := byte((addr shr 16) AND $FF);
-    spr[idx].xPos := 0;
-    spr[idx].yPos := 0;
+    spr := spr + idx;
+
+    spr.ctrl := ctrl;
+    spr.addr[0] := byte(addr AND $FF);
+    spr.addr[1] := byte((addr shr 8) AND $FF);
+    spr.addr[2] := byte((addr shr 16) AND $FF);
+    spr.xPos := 0;
+    spr.yPos := 0;
 end;
 
 
@@ -58,7 +60,9 @@ var spr: ^TSprite absolute $D900;
 begin
 	IOPAGE_CTRL := iopPage0;
 
-    spr[idx].ctrl := spr[idx].ctrl or spritectrl.scEnable;
+    spr := spr + idx;
+
+    spr.ctrl := spr.ctrl or spritectrl.scEnable;
 end;
 
 
@@ -67,7 +71,9 @@ var spr: ^TSprite absolute $D900;
 begin
 	IOPAGE_CTRL := iopPage0;
 
-    spr[idx].ctrl := spr[idx].ctrl and not spritectrl.scEnable;
+    spr := spr + idx;
+
+    spr.ctrl := spr.ctrl and not spritectrl.scEnable;
 end;
 
 
@@ -76,8 +82,10 @@ var spr: ^TSprite absolute $D900;
 begin
 	IOPAGE_CTRL := iopPage0;
 
-    spr[idx].xPos := xPos;
-    spr[idx].yPos := yPos;
+    spr := spr + idx;
+
+    spr.xPos := xPos;
+    spr.yPos := yPos;
 end;
 
 
