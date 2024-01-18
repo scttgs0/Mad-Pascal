@@ -72,9 +72,13 @@ BAT
     mads.exe filename.a65 -x -i:<MadPascalPath>\base
 
 ### [Foenix F256](https://github.com/tebe6502/Mad-Pascal/tree/master/samples/f256)
-    mp -t f256 filename.pas -ipath:<MadPascalPath>/lib
+    mp.exe -t f256 filename.pas -ipath:<MadPascalPath>/lib
     mads filename.a65 -x -i:<MadPascalPath>/base
 
+    Alternate binary output file formats:
+    mp.exe -t f256pgx filename.pas -ipath:<MadPascalPath>/lib
+    mp.exe -t f256pgz filename.pas -ipath:<MadPascalPath>/lib
+	
 ### [RAW](https://github.com/tebe6502/Mad-Pascal/tree/master/samples/raw)
     mp.exe -t raw filename.pas -ipath:<MadPascalPath>\lib
     mads.exe filename.a65 -x -i:<MadPascalPath>\base
