@@ -39,52 +39,32 @@ var sid: ^TSID absolute $D400;
 begin
     IOPAGE_CTRL := iopPage0;
 
-    case idx of
-        $00: begin
-            sid[0].channel[0].freq := 0;
-            sid[0].channel[0].pulse := 0;
-            sid[0].channel[0].ctrl := 0;
-            sid[0].channel[0].atdcy := 0;
-            sid[0].channel[0].surel := 0;
-            sid[0].channel[1].freq := 0;
-            sid[0].channel[1].pulse := 0;
-            sid[0].channel[1].ctrl := 0;
-            sid[0].channel[1].atdcy := 0;
-            sid[0].channel[1].surel := 0;
-            sid[0].channel[2].freq := 0;
-            sid[0].channel[2].pulse := 0;
-            sid[0].channel[2].ctrl := 0;
-            sid[0].channel[2].atdcy := 0;
-            sid[0].channel[2].surel := 0;
-            sid[0].cutoff := 0;
-            sid[0].reson := 0;
-            sid[0].sigvol := 0;
-            sid[0].random := 0;
-            sid[0].env3 := 0;
-        end;
-        $01: begin
-            sid[1].channel[0].freq := 0;
-            sid[1].channel[0].pulse := 0;
-            sid[1].channel[0].ctrl := 0;
-            sid[1].channel[0].atdcy := 0;
-            sid[1].channel[0].surel := 0;
-            sid[1].channel[1].freq := 0;
-            sid[1].channel[1].pulse := 0;
-            sid[1].channel[1].ctrl := 0;
-            sid[1].channel[1].atdcy := 0;
-            sid[1].channel[1].surel := 0;
-            sid[1].channel[2].freq := 0;
-            sid[1].channel[2].pulse := 0;
-            sid[1].channel[2].ctrl := 0;
-            sid[1].channel[2].atdcy := 0;
-            sid[1].channel[2].surel := 0;
-            sid[1].cutoff := 0;
-            sid[1].reson := 0;
-            sid[1].sigvol := 0;
-            sid[1].random := 0;
-            sid[1].env3 := 0;
-        end;
-    end;
+    if idx = 1 then
+        sid := sid + $100;
+
+    sid.channel[0].freq := 0;
+    sid.channel[0].pulse := 0;
+    sid.channel[0].ctrl := 0;
+    sid.channel[0].atdcy := 0;
+    sid.channel[0].surel := 0;
+
+    sid.channel[1].freq := 0;
+    sid.channel[1].pulse := 0;
+    sid.channel[1].ctrl := 0;
+    sid.channel[1].atdcy := 0;
+    sid.channel[1].surel := 0;
+
+    sid.channel[2].freq := 0;
+    sid.channel[2].pulse := 0;
+    sid.channel[2].ctrl := 0;
+    sid.channel[2].atdcy := 0;
+    sid.channel[2].surel := 0;
+
+    sid.cutoff := 0;
+    sid.reson := 0;
+    sid.sigvol := 0;
+    sid.random := 0;
+    sid.env3 := 0;
 end;
 
 
@@ -93,57 +73,15 @@ var sid: ^TSID absolute $D400;
 begin
     IOPAGE_CTRL := iopPage0;
 
-    case idx of
-        $00: begin
-            case chan of
-                $00: begin
-                    sid[0].channel[0].freq := 0;
-                    sid[0].channel[0].pulse := 0;
-                    sid[0].channel[0].ctrl := 0;
-                    sid[0].channel[0].atdcy := 0;
-                    sid[0].channel[0].surel := 0;
-                end;
-                $01: begin
-                    sid[0].channel[1].freq := 0;
-                    sid[0].channel[1].pulse := 0;
-                    sid[0].channel[1].ctrl := 0;
-                    sid[0].channel[1].atdcy := 0;
-                    sid[0].channel[1].surel := 0;
-                end;
-                $01: begin
-                    sid[0].channel[2].freq := 0;
-                    sid[0].channel[2].pulse := 0;
-                    sid[0].channel[2].ctrl := 0;
-                    sid[0].channel[2].atdcy := 0;
-                    sid[0].channel[2].surel := 0;
-                end;
-            end;
-        end;
-        $01: begin
-            case chan of
-                $00: begin
-                    sid[1].channel[0].freq := 0;
-                    sid[1].channel[0].pulse := 0;
-                    sid[1].channel[0].ctrl := 0;
-                    sid[1].channel[0].atdcy := 0;
-                    sid[1].channel[0].surel := 0;
-                end;
-                $01: begin
-                    sid[1].channel[1].freq := 0;
-                    sid[1].channel[1].pulse := 0;
-                    sid[1].channel[1].ctrl := 0;
-                    sid[1].channel[1].atdcy := 0;
-                    sid[1].channel[1].surel := 0;
-                end;
-                $01: begin
-                    sid[1].channel[2].freq := 0;
-                    sid[1].channel[2].pulse := 0;
-                    sid[1].channel[2].ctrl := 0;
-                    sid[1].channel[2].atdcy := 0;
-                    sid[1].channel[2].surel := 0;
-                end;
-            end;
-        end;
+    if idx = 1 then
+        sid := sid + $100;
+
+    if chan <= 2 then begin
+        sid.channel[chan].freq := 0;
+        sid.channel[chan].pulse := 0;
+        sid.channel[chan].ctrl := 0;
+        sid.channel[chan].atdcy := 0;
+        sid.channel[chan].surel := 0;
     end;
 end;
 
