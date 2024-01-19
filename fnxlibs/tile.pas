@@ -36,65 +36,72 @@ implementation
 // ------------------------------------
 
 procedure SetInit(idx, ctrl: byte; addr: dword);
-var tset: ^TTileSet;
+var tset: ^TTileSet absolute $D280;
 begin
     IOPAGE_CTRL := iopPage0;
 
-    if idx <= 7 then begin
-        tset[idx].ctrl := ctrl;
-        tset[idx].addr[0] := byte(addr AND $FF);
-        tset[idx].addr[1] := byte((addr shr 8) AND $FF);
-        tset[idx].addr[2] := byte((addr shr 16) AND $FF);
-    end;
+    if idx <= 7 then
+        tset := tset + idx;
+
+    tset.ctrl := ctrl;
+    tset.addr[0] := byte(addr AND $FF);
+    tset.addr[1] := byte((addr shr 8) AND $FF);
+    tset.addr[2] := byte((addr shr 16) AND $FF);
 end;
 
 
 procedure MapInit(idx, ctrl: byte; xSize, ySize: word; addr: dword);
-var tmap: ^TTileMap;
+var tmap: ^TTileMap absolute $D200;
 begin
     IOPAGE_CTRL := iopPage0;
 
-    if idx <= 2 then begin
-        tmap[idx].ctrl := ctrl;
-        tmap[idx].addr[0] := byte(addr AND $FF);
-        tmap[idx].addr[1] := byte((addr shr 8) AND $FF);
-        tmap[idx].addr[2] := byte((addr shr 16) AND $FF);
-        tmap[idx].xSize := xSize;
-        tmap[idx].ySize := ySize;
-        tmap[idx].xScroll := 0;
-        tmap[idx].yScroll := 0;
-    end;
+    if idx <= 2 then
+        tmap := tmap + idx;
+
+    tmap.ctrl := ctrl;
+    tmap.addr[0] := byte(addr AND $FF);
+    tmap.addr[1] := byte((addr shr 8) AND $FF);
+    tmap.addr[2] := byte((addr shr 16) AND $FF);
+    tmap.xSize := xSize;
+    tmap.ySize := ySize;
+    tmap.xScroll := 0;
+    tmap.yScroll := 0;
 end;
 
 
 procedure Show(idx: byte);
-var tmap: ^TTileMap;
-begin
-    IOPAGE_CTRL := iopPage0;
-
-    if idx <= 2 then
-        tmap[idx].ctrl := tmap[idx].ctrl or tilemapctrl.tcEnable;
-end;
-
-
-procedure Hide(idx: byte);
-var tmap: ^TTileMap;
-begin
-    IOPAGE_CTRL := iopPage0;
-
-    if idx <= 2 then
-        tmap[idx].ctrl := tmap[idx].ctrl and not tilemapctrl.tcEnable;
-end;
-
-
-procedure Scroll(idx: byte; xScroll, yScroll: smallint);
-var tmap: ^TTileMap;
+var tmap: ^TTileMap absolute $D200;
 begin
     IOPAGE_CTRL := iopPage0;
 
     if idx <= 2 then begin
-        tmap[idx].xScroll := xScroll;
-        tmap[idx].yScroll := yScroll;
+        tmap := tmap + idx;
+        tmap.ctrl := tmap.ctrl or tilemapctrl.tcEnable;
+    end;
+end;
+
+
+procedure Hide(idx: byte);
+var tmap: ^TTileMap absolute $D200;
+begin
+    IOPAGE_CTRL := iopPage0;
+
+    if idx <= 2 then begin
+        tmap := tmap + idx;
+        tmap.ctrl := tmap.ctrl and not tilemapctrl.tcEnable;
+    end;
+end;
+
+
+procedure Scroll(idx: byte; xScroll, yScroll: smallint);
+var tmap: ^TTileMap absolute $D200;
+begin
+    IOPAGE_CTRL := iopPage0;
+
+    if idx <= 2 then begin
+        tmap := tmap + idx;
+        tmap.xScroll := xScroll;
+        tmap.yScroll := yScroll;
     end;
 end;
 
