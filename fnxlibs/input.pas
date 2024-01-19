@@ -89,7 +89,7 @@ begin
     IOPAGE_CTRL := iopPage0;
 
     for i := 0 to 255 do
-        MOUSE_IMAGE+i := pointer(addr)[i];
+        MOUSE_IMAGE_PTR+i^ := pointer(addr+i)^;
 end;
 
 

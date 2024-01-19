@@ -1,6 +1,10 @@
+
 unit f256;
 
+
+// ------------------------------------
 interface
+// ------------------------------------
 
 type
 
@@ -94,31 +98,31 @@ var
 //-----------------------------------------------
 //  IO Bank 01
 
-    FONT_MEMORY_BANK0:      array [0..2] of byte absolute $C000;
-    FONT_MEMORY_BANK1:      array [0..2] of byte absolute $C800;
+    FONT_MEMORY_BANK0:      ^byte absolute $C000;
+    FONT_MEMORY_BANK1:      ^byte absolute $C800;
 
-    GRPH_LUT0_PTR:          array [0..1023] of byte absolute $D000;
-    GRPH_LUT1_PTR:          array [0..1023] of byte absolute $D400;
-    GRPH_LUT2_PTR:          array [0..1023] of byte absolute $D800;
-    GRPH_LUT3_PTR:          array [0..1023] of byte absolute $DC00;
+    GRPH_LUT0_PTR:          ^byte absolute $D000;
+    GRPH_LUT1_PTR:          ^byte absolute $D400;
+    GRPH_LUT2_PTR:          ^byte absolute $D800;
+    GRPH_LUT3_PTR:          ^byte absolute $DC00;
 
 
 //-----------------------------------------------
 //  IO Bank 02
 
-    CS_TEXT_MEM_PTR:        byte absolute $C000;
+    CS_TEXT_MEM_PTR:        ^byte absolute $C000;
 
 
 //-----------------------------------------------
 //  IO Bank 03
 
-    CS_COLOR_MEM_PTR:       byte absolute $C000;
+    CS_COLOR_MEM_PTR:       ^byte absolute $C000;
 
 
 //-----------------------------------------------
 //  IO Bank 00
 
-    MOUSE_IMAGE:            byte absolute $CC00;
+    MOUSE_IMAGE_PTR:        ^byte absolute $CC00;
 
     MASTER_CTRL_L:          byte absolute $D000;
     MASTER_CTRL_H:          byte absolute $D001;
@@ -159,22 +163,22 @@ var
     TILE0_ADDR:             array [0..2] of byte absolute $D201;
     TILE0_SIZE_X:           word absolute $D204;
     TILE0_SIZE_Y:           word absolute $D206;
-    TILE0_SCROLL_X:         word absolute $D208;
-    TILE0_SCROLL_Y:         word absolute $D20A;
+    TILE0_SCROLL_X:         smallint absolute $D208;
+    TILE0_SCROLL_Y:         smallint absolute $D20A;
 
     TILE1_CTRL:             byte absolute $D20C;
     TILE1_ADDR:             array [0..2] of byte absolute $D20D;
     TILE1_SIZE_X:           word absolute $D210;
     TILE1_SIZE_Y:           word absolute $D212;
-    TILE1_SCROLL_X:         word absolute $D214;
-    TILE1_SCROLL_Y:         word absolute $D216;
+    TILE1_SCROLL_X:         smallint absolute $D214;
+    TILE1_SCROLL_Y:         smallint absolute $D216;
 
     TILE2_CTRL:             byte absolute $D218;
     TILE2_ADDR:             array [0..2] of byte absolute $D219;
     TILE2_SIZE_X:           word absolute $D21C;
     TILE2_SIZE_Y:           word absolute $D21E;
-    TILE2_SCROLL_X:         word absolute $D220;
-    TILE2_SCROLL_Y:         word absolute $D222;
+    TILE2_SCROLL_X:         smallint absolute $D220;
+    TILE2_SCROLL_Y:         smallint absolute $D222;
 
     TILESET0_ADDR:          array [0..2] of byte absolute $D280;
     TILESET0_ADDR_CFG:      byte absolute $D283;
@@ -350,10 +354,10 @@ var
     C256F_MODEL_MAJOR:      byte absolute $D70B;
     C256F_MODEL_MINOR:      byte absolute $D70C;
 
-    FG_CHAR_LUT_PTR:        byte absolute $D800;
-    BG_CHAR_LUT_PTR:        byte absolute $D840;
+    FG_CHAR_LUT_PTR:        ^byte absolute $D800;
+    BG_CHAR_LUT_PTR:        ^byte absolute $D840;
 
-    SPRITE_BASE:            byte absolute $D900;
+    SPRITE_BASE_PTR:        ^byte absolute $D900;
 
     VIA1_IO_PORTB:          byte absolute $DB00;
     VIA1_IO_PORTA:          byte absolute $DB01;
@@ -391,17 +395,17 @@ var
 
     MULU_A:                 word absolute $DE00;
     MULU_B:                 word absolute $DE02;
-    MULU_RESULT:            array [0..3] of byte absolute $DE10;
+    MULU_RESULT:            dword absolute $DE10;
 
     DIVU_DENOM:             word absolute $DE04;
     DIVU_NUMR:              word absolute $DE06;
-    DIVU_RESULT:            array [0..3] of byte absolute $DE14;
+    DIVU_RESULT:            dword absolute $DE14;
     DIVU_RESULT_Q:          word absolute $DE14;
     DIVU_RESULT_R:          word absolute $DE16;
 
-    ADD_A:                  array [0..3] of byte absolute $DE08;
-    ADD_B:                  array [0..3] of byte absolute $DE0C;
-    ADD_RESULT:             array [0..3] of byte absolute $DE18;
+    ADD_A:                  dword absolute $DE08;
+    ADD_B:                  dword absolute $DE0C;
+    ADD_RESULT:             dword absolute $DE18;
 
     DMA_CTRL:               byte absolute $DF00;
     DMA_STATUS:             byte absolute $DF01;
@@ -414,6 +418,9 @@ var
     DMA_STRIDE_SRC:         word absolute $DF10;
     DMA_STRIDE_DST:         word absolute $DF12;
 
+
+// ------------------------------------
 implementation
+// ------------------------------------
 
 end.
