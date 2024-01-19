@@ -26,6 +26,10 @@ var
 
 begin
     // InitGraph(ord(masterctrll(mcGraphicsOn+mcBitmapOn)),ord(masterctrlh.mcVideoMode240));
+    IOPAGE_CTRL := iopPage0;
+
+    MASTER_CTRL_L := ord(masterctrll(mcGraphicsOn+mcBitmapOn));
+    MASTER_CTRL_H := ord(masterctrlh.mcVideoMode240);
 
     bitmap.Init(0, ord(bitmapctrl(bmcEnable+bmcLUT0)), @bitmap00);
 end.

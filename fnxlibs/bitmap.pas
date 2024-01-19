@@ -25,32 +25,38 @@ implementation
 // ------------------------------------
 
 procedure Init(idx, ctrl: byte; addr: dword);
-var bmap: ^TBitmap;
+var bmap: ^TBitmap absolute $D100;
 begin
 	IOPAGE_CTRL := iopPage0;
 
-    bmap[idx].ctrl := ctrl;
-    bmap[idx].addr[0] := byte(addr AND $FF);
-    bmap[idx].addr[1] := byte((addr shr 8) AND $FF);
-    bmap[idx].addr[2] := byte((addr shr 16) AND $FF);
+    bmap := bmap + idx;
+
+    bmap.ctrl := ctrl;
+    bmap.addr[0] := byte(addr AND $FF);
+    bmap.addr[1] := byte((addr shr 8) AND $FF);
+    bmap.addr[2] := byte((addr shr 16) AND $FF);
 end;
 
 
 procedure Show(idx: byte);
-var bmap: ^TBitmap;
+var bmap: ^TBitmap absolute $D100;
 begin
 	IOPAGE_CTRL := iopPage0;
 
-    bmap[idx].ctrl := bmap[idx].ctrl or bitmapctrl.bmcEnable;
+    bmap := bmap + idx;
+
+    bmap.ctrl := bmap.ctrl or bitmapctrl.bmcEnable;
 end;
 
 
 procedure Hide(idx: byte);
-var bmap: ^TBitmap;
+var bmap: ^TBitmap absolute $D100;
 begin
 	IOPAGE_CTRL := iopPage0;
 
-    bmap[idx].ctrl := bmap[idx].ctrl and not bitmapctrl.bmcEnable;
+    bmap := bmap + idx;
+
+    bmap.ctrl := bmap.ctrl and not bitmapctrl.bmcEnable;
 end;
 
 end.
