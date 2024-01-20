@@ -15128,8 +15128,6 @@ var i, j, DataSegmentSize, IdentIndex: Integer;
     tmp, a: string;
     yes: Boolean;
     res: TResource;
-    fsize: longint;
-    f: file of byte;
 begin
 
 ResetOpty;
@@ -15487,20 +15485,14 @@ asm65('.macro'#9'STATICDATA');
 
     if (target.id = 'f256') and (F256Outtype ='PGZ') then
     begin
-      // get file size of resource file
-      assign(f,	resArray[i].resFile);
-      reset(f);
-      fsize:=FileSize(f);
-      close(f);
-
       // write segment header for resource: address (24bit), length (24bit)
       asm65(#9'.by '+
-        '$'+IntToHex(resArray[i].resValue and $ff,2)+','+
-        '$'+IntToHex((resArray[i].resValue shr 8) and $ff,2)+','+
-        '$'+IntToHex((resArray[i].resValue shr 16) and $ff,2)+','+
-        '$'+IntToHex(fsize and $ff,2)+','+
-        '$'+IntToHex((fsize shr 8) and $ff,2)+','+
-        '$'+IntToHex((fsize shr 16) and $ff,2));
+        '<:main.'+resArray[i].resFullName+'.start,'+
+        '>:main.'+resArray[i].resFullName+'.start,'+
+        '^:main.'+resArray[i].resFullName+'.start,'+
+        '<:main.'+resArray[i].resFullName+'.size,'+
+        '>:main.'+resArray[i].resFullName+'.size,'+
+        '^:main.'+resArray[i].resFullName+'.size');
     end;
 
     asm65(a);
