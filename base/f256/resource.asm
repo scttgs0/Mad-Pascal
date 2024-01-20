@@ -1,5 +1,5 @@
 
-	opt l-
+	opt l-c+
 
 /*
 	RCASM
@@ -40,7 +40,9 @@ len = * - len_
 
 	org main.%%lab
 
+        .def :main.%%lab.start = *
 	ins %%1,%%ofs
+        .def :main.%%lab.size = * - :main.%%lab.start
 
 	.print '$R RCDATA  ',main.%%lab,'..',*-1," %%1"
 .endm
