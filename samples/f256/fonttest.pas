@@ -4,7 +4,8 @@ program fonttest;
 uses crt, font, f256;
 
 var
-    font00: array[0..1024] of byte = ({$BIN2CSV goth.set});
+    font00: array of byte = [{$BIN2CSV goth.set}];
+
 
 begin
     // InitGraph(ord(masterctrll(mcGraphicsOn+mcBitmapOn)),ord(masterctrlh.mcVideoMode240));
@@ -18,5 +19,9 @@ begin
     ClrScr;
 
     TextAttr := $10;
-    writeln('Hello World!');
+    Writeln;
+    Writeln('Hail and Well met! Shall I find thee a Goodly character, or Hast thou brought one with thee?');
+    Writeln;
+    Writeln('Art but Passing through the Inn and wish to return to the Dunjon?');
+
 end.

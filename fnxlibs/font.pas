@@ -43,9 +43,9 @@ asm
         ldx #@iopagectrl(iopPage1)
         stx IOPAGE_CTRL
 
-        lda #>addr
+        lda #>(addr+3)
         sta tempzp+1
-        lda #<addr
+        lda #<(addr+3)
         sta tempzp
 
         lda #>$C000
@@ -61,6 +61,9 @@ _2      lda (tempzp),Y
         dey
         cpy #$FF
         bne _2
+
+        inc tempzp+1
+        inc tempzp+3
 
         dex
         bpl _1
