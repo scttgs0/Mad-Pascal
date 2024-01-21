@@ -9,6 +9,9 @@
 {$ifdef c4p}
   {$i graph_c4p.inc}
 {$endif}
+{$ifdef f256}
+  {$i graph_f256.inc}
+{$endif}
 {$ifdef raw}
   {$i graph_raw.inc}
 {$endif}

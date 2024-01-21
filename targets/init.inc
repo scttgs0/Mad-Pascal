@@ -34,6 +34,14 @@ a8.name       := 'ATARI';
 a8.zpage      := 'org $80';
 a8.eol        := $0000009B;
 
+// Foenix F256 binary target
+f256.id         := 'f256';
+f256.name       := 'F256';
+f256.zpage      := 'org $80';
+f256.eol        := $0000000D;
+f256.codeorigin := $2000;
+f256.header[0]  := 'END';
+
 // RAW binary target
 raw.id         := 'raw';
 raw.name       := 'RAW';

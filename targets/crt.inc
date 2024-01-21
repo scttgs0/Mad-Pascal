@@ -9,6 +9,9 @@
 {$ifdef c4p}
   {$i crt_c4p.inc}
 {$endif}
+{$ifdef f256}
+  {$i crt_f256.inc}
+{$endif}
 {$ifdef raw}
   {$i crt_raw.inc}
 {$endif}

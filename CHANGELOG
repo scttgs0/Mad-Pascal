@@ -1,6 +1,3 @@
-13.01.2023
-- unit Common, procedure DefineStaticString, usunięty ostatni nadmiarowy bajt ciągu znakowego
-
 31.12.2023
 - Bugfixes
 - FASTGRAPH: HLine

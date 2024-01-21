@@ -13107,6 +13107,7 @@ begin
 
   i := CompileConstExpression(i + 1, ConstVal, ActualParamType, ConstValType);
 
+
   if (ConstValType = STRINGPOINTERTOK) and (ActualParamType = CHARTOK) then begin	// rejestrujemy CHAR jako STRING
 
     if StaticData then
@@ -15239,10 +15240,6 @@ asm65(#13#10'.local'#9'@RESOURCE');
     resArray[i].resStream := true;
    end else
 
-   if AnsiUpperCase(resArray[i].resType) = 'DOSFILE' then begin
-
-   end else
-
    if AnsiUpperCase(resArray[i].resType) = 'RCDATA' then begin
     asm65(resArray[i].resName+#9'ins '''+resArray[i].resFile+'''');
     asm65(resArray[i].resName+'.end');
@@ -15308,7 +15305,7 @@ if DATA_Atari > 0 then
 else begin
 
  asm65(#9'?adr = *');
- asm65(#9'ift (?adr < ?old_adr) && (?old_adr - ?adr < $120)');
+ asm65(#9'ift (?adr < ?old_adr) && (?old_adr - ?adr < $1)'); // originally $120- phase error tolerance?
  asm65(#9'?adr = ?old_adr');
  asm65(#9'eif');
  asm65;
@@ -15410,6 +15407,8 @@ end;
 
 asm65separator;
 
+asm65('F256BINARYSIZE'#9'= * - CODEORIGIN');
+
 asm65;
 asm65('.macro'#9'STATICDATA');
 
@@ -15484,12 +15483,31 @@ asm65('.macro'#9'STATICDATA');
 
     for j := 1 to MAXPARAMS do a:=a+' '+resArray[i].resPar[j];
 
+    if (target.id = 'f256') and (F256Outtype ='PGZ') then
+    begin
+      // write segment header for resource: address (24bit), length (24bit)
+      asm65(#9'.by '+
+        '<:main.'+resArray[i].resFullName+'.start,'+
+        '>:main.'+resArray[i].resFullName+'.start,'+
+        '^:main.'+resArray[i].resFullName+'.start,'+
+        '<:main.'+resArray[i].resFullName+'.size,'+
+        '>:main.'+resArray[i].resFullName+'.size,'+
+        '^:main.'+resArray[i].resFullName+'.size');
+    end;
+
     asm65(a);
    end;
 
   asm65('.endl');
  end;
 
+  if target.id = 'f256' then begin
+    if F256Outtype ='PGZ' then begin
+      // write the last PGZ empty block length with executing address
+      asm65;
+      asm65(#9'.by <START,>START,^START,$00,$00,$00');
+    end;
+  end;
 
 asm65;
 asm65(#9'end');
